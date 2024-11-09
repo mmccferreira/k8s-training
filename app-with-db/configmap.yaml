@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: dev
+  name: app-with-db-configmap
+data:
+  QUARKUS_DATASOURCE_JDBC_URL: "jdbc:postgresql://postgres.services.svc.cluster.local:5432/test"
