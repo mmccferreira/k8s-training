@@ -18,7 +18,7 @@ spec:
     - name: http
       port: 80
       protocol: TCP
-      targetPort: {{ HTTP_PORT }}
+      targetPort: 8080
   selector:
     app.kubernetes.io/name: quarkus-training-part2
     app.kubernetes.io/version: 1.0.0-SNAPSHOT

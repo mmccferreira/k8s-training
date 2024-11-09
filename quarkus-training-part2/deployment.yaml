@@ -43,8 +43,8 @@ spec:
                 name: database-credentials
           image: quarkus-training-part2:0.0.1
           imagePullPolicy: Never
-          name: {{ IMAGE_NAME }}
+          name: quarkus-training-part2
           ports:
-            - containerPort: {{ HTTP_PORT }}
+            - containerPort: 8080
               name: http
               protocol: TCP
