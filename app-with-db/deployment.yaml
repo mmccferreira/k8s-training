@@ -5,29 +5,29 @@ metadata:
   annotations:
     app.quarkus.io/quarkus-version: 3.12.0
     app.quarkus.io/commit-id: e7824475768421a9cdb770b8cd66c49375e8445c
-    app.quarkus.io/vcs-uri: https://github.com/fernandobalieiro/quarkus-training-part2.git
+    app.quarkus.io/vcs-uri: https://github.com/fernandobalieiro/app-with-db.git
     app.quarkus.io/build-timestamp: 2024-09-20 - 16:22:18 +0000
   labels:
-    app.kubernetes.io/name: quarkus-training-part2
+    app.kubernetes.io/name: app-with-db
     app.kubernetes.io/version: 1.0.0-SNAPSHOT
     app.kubernetes.io/managed-by: quarkus
-  name: quarkus-training-part2
+  name: app-with-db
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app.kubernetes.io/name: quarkus-training-part2
+      app.kubernetes.io/name: app-with-db
       app.kubernetes.io/version: 1.0.0-SNAPSHOT
   template:
     metadata:
       annotations:
         app.quarkus.io/quarkus-version: 3.12.0
         app.quarkus.io/commit-id: e7824475768421a9cdb770b8cd66c49375e8445c
-        app.quarkus.io/vcs-uri: https://github.com/fernandobalieiro/quarkus-training-part2.git
+        app.quarkus.io/vcs-uri: https://github.com/fernandobalieiro/app-with-db.git
         app.quarkus.io/build-timestamp: 2024-09-20 - 16:22:18 +0000
       labels:
         app.kubernetes.io/managed-by: quarkus
-        app.kubernetes.io/name: quarkus-training-part2
+        app.kubernetes.io/name: app-with-db
         app.kubernetes.io/version: 1.0.0-SNAPSHOT
     spec:
       containers:
@@ -38,12 +38,12 @@ spec:
                   fieldPath: metadata.namespace
           envFrom:
             - configMapRef:
-                name: quarkus-training-part2-configmap
+                name: app-with-db-configmap
             - secretRef:
                 name: database-credentials
-          image: quarkus-training-part2:0.0.1
+          image: app-with-db:0.0.1
           imagePullPolicy: Never
-          name: quarkus-training-part2
+          name: app-with-db
           ports:
             - containerPort: 8080
               name: http
@@ -52,9 +52,16 @@ spec:
             httpGet:
               path: /q/health/live
               port: http
-            initialDelaySeconds:  30
+            initialDelaySeconds: 10
           readinessProbe:
             httpGet:
               path: /q/health/ready
               port: http
-            initialDelaySeconds: 10
+            initialDelaySeconds: 5
+          resources:
+            limits:
+              cpu: 50m
+              memory: 24Mi
+            requests:
+              cpu: 25m
+              memory: 12Mi
