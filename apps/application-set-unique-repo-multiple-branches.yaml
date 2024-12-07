@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: root
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - list:
+        elements:
+          - name: simple-app
+            path: charts/simple-app
+            targetRevision: argocd
+            type: api
+          - name: app-with-db
+            path: charts/app-with-db
+            targetRevision: argocd
+            type: api
+          - name: postgres
+            path: charts/postgres
+            targetRevision: argocd
+            type: services
+  template:
+    metadata:
+      name: '{{name}}'
+      labels:
+        type: '{{type}}'
+    spec:
+      project: default
+      source:
+        helm:
+          valueFiles:
+            - values.yaml
+        # TODO: Replace by your username and push the changes to your fork
+        repoURL: git@github.com:fernandobalieiro/k8s-training.git
+        targetRevision: '{{targetRevision}}'
+        path: '{{path}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: dev
