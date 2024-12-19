@@ -23,9 +23,9 @@ spec:
             type: services
   template:
     metadata:
-      name: '{{name}}'
+      name: '{{.name}}'
       labels:
-        type: '{{type}}'
+        type: '{{.type}}'
     spec:
       project: default
       source:
@@ -34,8 +34,8 @@ spec:
             - values.yaml
         # TODO: Replace by your username and push the changes to your fork
         repoURL: git@github.com:fernandobalieiro/k8s-training.git
-        targetRevision: '{{targetRevision}}'
-        path: '{{path}}'
+        targetRevision: '{{.targetRevision}}'
+        path: '{{.path}}'
       syncPolicy:
         automated:
           prune: true

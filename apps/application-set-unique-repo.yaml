@@ -20,9 +20,9 @@ spec:
             type: services
   template:
     metadata:
-      name: '{{name}}'
+      name: '{{.name}}'
       labels:
-        type: '{{type}}'
+        type: '{{.type}}'
     spec:
       project: default
       source:
@@ -33,7 +33,7 @@ spec:
         repoURL: git@github.com:fernandobalieiro/k8s-training.git
         targetRevision: argocd # This is the name of the branch where we have our code
         #targetRevision: HEAD # This is the proper value when configuring it normally
-        path: '{{path}}'
+        path: '{{.path}}'
       syncPolicy:
         automated:
           prune: true
